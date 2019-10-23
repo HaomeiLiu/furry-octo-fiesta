@@ -27,11 +27,11 @@ def get_peak_frqs(frq, fft):
     #get the high and low frequency by splitting it in the middle (1000Hz)
     frq_len = len(frq)
     fft_len = len(fft)
-    high_frq = frq[int(frq_len/2 + 1):frq_len]
-    low_frq = frq[0:int(frq_len/2)]
+    high_frq = frq[int(frq_len/2):]
+    low_frq = frq[:int(frq_len/2)]
     #spliting the FFT to high and low frequencies
-    high_frq_fft = fft[int(fft_len/2 + 1):fft_len]
-    low_frq_fft = fft[0:int(fft_len/2)]
+    high_frq_fft = fft[int(fft_len/2):]
+    low_frq_fft = fft[:int(fft_len/2)]
 
     return (get_max_frq(low_frq, low_frq_fft), get_max_frq(high_frq, high_frq_fft))
 
@@ -42,7 +42,15 @@ def get_number_from_frq(lower_frq, higher_frq):
         if (lower_frq <= LOWER_FRQS[i] + FRQ_THRES) and (lower_frq >= LOWER_FRQS[i] - FRQ_THRES):
             for j in range(len(HIGHER_FRQS)):
                 if(higher_frq <= HIGHER_FRQS[j] + FRQ_THRES) and (higher_frq >= HIGHER_FRQS[j] - FRQ_THRES):
-                    return i*3+(j+1)       
+                    output = i*3+(j+1)  
+                    if output == 10:
+                        return '*'
+                    elif output == 11:
+                        return '0'
+                    elif output == 12:
+                        return '#'
+                    else:
+                        return output
     return '?'
 
 def main(file):
@@ -109,3 +117,4 @@ if __name__ == '__main__':
         print("Usage: decode.py [file]")
         exit(1)
     main(sys.argv[1])
+
