@@ -96,7 +96,6 @@ def main(file):
         sample_slice_fft = np.fft.fft(samples[start_index:end_index])/n   #perform the fourier transform on the sample_slice and normalize by dividing by n
 
         #TODO: truncate the FFT to 0 to 2000 Hz
-        max_frq_idx = int(MAX_FRQ*slice_duration)       #get the index of the maximum frequency (2000)
         sample_slice_fft = sample_slice_fft[range(max_frq_idx)]     #truncate the sample slice fft array so it goes from 0 to 2000 Hz
 
         #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
