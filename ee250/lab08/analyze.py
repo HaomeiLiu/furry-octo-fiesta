@@ -29,6 +29,10 @@ def main(start_time, file):
     #TODO: Plot the full sample as a subplot (make sure to include labels)
     plt.figure(figsize=(20,10))
     plt.subplot(221)
+    plt.title("Overview Full Sample Plot")
+    plt.xlabel('Time')
+    plt.ylabel('Amplitude')
+    plt.plot(time,samples)
 
     """***********************SAMPLE SLICE PLOT*************************"""
     print("Analyzing slice at {}s".format(start_time))
@@ -41,6 +45,10 @@ def main(start_time, file):
 
     #TODO: Plot the sample slice as a subplot (make sure to include labels)
     plt.subplot(222)
+    plt.title('Sample Slice Plot')
+    plt.xlabel('Time')
+    plt.ylabel('Amplitude')
+    plt.plot(time_slice,sample_slice)
 
     """**********************SAMPLE SLICE FFT PLOT**********************"""
     n = slice_frame_size                            #n is the number of elements in the slice
@@ -58,6 +66,10 @@ def main(start_time, file):
 
     #TODO: Plot the frequency spectrum as a subplot (make sure to include labels)
     plt.subplot(212)
+    plt.title('The Frequency Spectrum Tone Window FFT')
+    plt.xlabel('Frequency')
+    plt.ylabel('Amplitude')
+    plt.plot(frq,abs(sample_slice_fft))
 
     plt.suptitle(file)
     plt.show()
