@@ -42,7 +42,7 @@ def get_number_from_frq(lower_frq, higher_frq):
         if (lower_frq <= LOWER_FRQS[i] + FRQ_THRES) and (lower_frq >= LOWER_FRQS[i] - FRQ_THRES):
             for j in range(len(HIGHER_FRQS)):
                 if(higher_frq <= HIGHER_FRQS[j] + FRQ_THRES) and (higher_frq >= HIGHER_FRQS[j] - FRQ_THRES):
-                    return i*3+(j+1)
+                    return i*3+(j+1)       
     return '?'
 
 def main(file):
