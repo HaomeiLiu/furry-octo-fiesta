@@ -24,16 +24,25 @@ def get_max_frq(frq, fft):
 
 def get_peak_frqs(frq, fft):
     #TODO: implement an algorithm to find the two maximum values in a given array
-
     #get the high and low frequency by splitting it in the middle (1000Hz)
-
+    frq_len = len(frq)
+    fft_len = len(fft)
+    high_frq = frq[int(frq_len/2 + 1):frq_len]
+    low_frq = frq[0:int(frq_len/2)]
     #spliting the FFT to high and low frequencies
+    high_frq_fft = fft[int(fft_len/2 + 1):fft_len]
+    low_frq_fft = fft[0:int(fft_len/2)]
 
     return (get_max_frq(low_frq, low_frq_fft), get_max_frq(high_frq, high_frq_fft))
 
 def get_number_from_frq(lower_frq, higher_frq):
     #TODO: given a lower frequency and higher frequency pair
     #      return the corresponding key otherwise return '?' if no match is found
+    for i in range(len(LOWER_FRQS)):
+        if (lower_frq <= LOWER_FRQS[i] + FRQ_THRES) and (lower_frq >= LOWER_FRQS[i] - FRQ_THRES):
+            for j in range(len(HIGHER_FRQS)):
+                if(higher_frq <= HIGHER_FRQS[j] + FRQ_THRES) and (higher_frq >= HIGHER_FRQS[j] - FRQ_THRES):
+                    return i*3+(j+1)
     return '?'
 
 def main(file):
@@ -65,6 +74,7 @@ def main(file):
     frq = frq[range(max_frq_idx)]                   #truncate the frequency array so it goes from 0 to 2000 Hz
 
     start_index = 0                                 #set the starting index at 0
+
     end_index = start_index + slice_sample_size      #find the ending index for the slice
     output = ''
 
@@ -75,13 +85,18 @@ def main(file):
         i += 1
 
         #TODO: grab the sample slice and perform FFT on it
+        sample_slice_fft = np.fft.fft(samples[start_index:end_index])/n   #perform the fourier transform on the sample_slice and normalize by dividing by n
 
         #TODO: truncate the FFT to 0 to 2000 Hz
+        max_frq_idx = int(MAX_FRQ*slice_duration)       #get the index of the maximum frequency (2000)
+        sample_slice_fft = sample_slice_fft[range(max_frq_idx)]     #truncate the sample slice fft array so it goes from 0 to 2000 Hz
 
         #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
-
+        lo,hi = get_peak_frqs(frq, sample_slice_fft)
+        print(lo,hi)
         #TODO: print the values and find the number that corresponds to the numbers
-
+        print(get_number_from_frq(lo,hi))
+        output = output + str(get_number_from_frq(lo,hi))
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
         end_index = start_index + slice_sample_size
