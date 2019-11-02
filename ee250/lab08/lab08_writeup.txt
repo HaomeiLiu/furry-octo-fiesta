@@ -1,0 +1,13 @@
+"""
+Question 1
+
+5055034455
+
+"""
+
+"""
+Question 2
+
+Split the frequencies arrays to low frequency and high frequency by dividing fre_len with two, then also split the fft into two parts. The first half would contain the information of one frequency, while the second half indicates the second frequency, which we can use together to determine the number. Finally we use the given function get_max_fre() to find the peak frequency for the two parts and return a tuple.
+
+"""
